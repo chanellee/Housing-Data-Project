@@ -1,3 +1,6 @@
+# The data created in this file can be found in Data.zip file
+# household, person, project RData files
+
 #install.packages("readr")
 library(readr)
 
