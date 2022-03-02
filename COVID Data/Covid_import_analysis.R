@@ -142,14 +142,96 @@ for(i in 1:16){
 
 
 
+###############################################################
+#             map
+###############################################################
+
+#use packages
+install.packages('usmap')
+library(usmap)
+library(ggplot2)
+
+#create plots
+par(mfrow = c(1,1))
+
+plot_usmap(regions = "counties") + 
+  labs(title = "US Counties",
+       subtitle = "I'm trying to put COVID data into the counties...") + 
+  theme(panel.background = element_rect(color = "black", fill = "black"))
+
+
+#################################################
+df <- data.frame(
+  fips = deaths_full[,5],
+  values = deaths[,771]
+)
+plot_usmap(data = df)+ 
+  scale_fill_continuous(
+    low = "white", high = "red", name = "uhh", label = scales::comma
+  )
+#################################################
 
 
 
+#################################################
+v = quantile(deaths[,771], 
+             probs = c(0.2,0.4,0.6,0.8,1))              
+names(v) = c("20% quantile","40% quantile","60% quantile",
+             "80% quantile","100% quantile")
+plot_usmap(data = df)+ 
+  labs(title = "Covid Deaths on 2-28-22", subtitle = "") + 
+  theme(panel.background = element_rect(color = "black", fill = "black"))+
+  scale_fill_stepsn(colours=c("white","red","blue","green"),
+                    breaks=v   ,
+                    limits=c(0,500))
+#################################################
 
 
 
-
-
-
-
-
+#   experimentation with ggplot
+# dim(deaths)
+# 
+# par(mfrow = c(1,1))
+# hist(deaths[,771])
+# summary(deaths[,771])
+# 
+# 
+# deads <- deaths[,771]
+# dead_bin <- cut_interval(deaths[,771], 
+#                             n = 4, 
+#                          labels = c("0-25", "26-50", "51-75", "76-40000"))
+# 
+# ?cut_interval
+# 
+# 
+# 
+# df2 <- data.frame(
+#   fips = deaths_full[,5],
+#   values = dead_bin
+# )
+# 
+# plot_usmap(data = df)+ 
+#   labs(title = "Covid Deaths on 2-28-22", subtitle = "") + 
+#   theme(panel.background = element_rect(color = "black", fill = "black"))+
+#   scale_fill_stepsn(colours=c("white","red","blue","green"),
+#                     breaks=v   ,
+#                     limits=c(0,500))
+# 
+# 
+# summary(deads)
+# 
+# str(quantile(deaths[,771], probs = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0))                         )
+#                          
+#                          
+# v = quantile(deaths[,771], 
+#          probs = c(0.2,0.4,0.6,0.8,1))              
+# names(v) = c("20% quantile","40% quantile","60% quantile","80% quantile","100% quantile")                      
+#                          
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
